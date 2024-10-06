@@ -1,8 +1,8 @@
 package com.userservice.controller;
 
-import com.userservice.dto.AddressResponseDto;
-import com.userservice.dto.UserCreateRequest;
-import com.userservice.dto.UserResponse;
+import com.userservice.dto.response.AddressResponseDto;
+import com.userservice.dto.request.UserCreateRequest;
+import com.userservice.dto.response.UserResponse;
 import com.userservice.entity.User;
 import com.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;

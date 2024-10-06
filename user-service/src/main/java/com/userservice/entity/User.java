@@ -1,6 +1,6 @@
 package com.userservice.entity;
 
-import com.userservice.dto.UserCreateRequest;
+import com.userservice.dto.request.UserCreateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.userservice.service;
 
 import com.userservice.config.UserCreatedTopicProperties;
-import com.userservice.dto.UserCreateRequest;
+import com.userservice.dto.request.UserCreateRequest;
 import com.userservice.dto.UserCreatedPayload;
 import com.userservice.entity.User;
 import com.userservice.producer.KafkaProducer;
