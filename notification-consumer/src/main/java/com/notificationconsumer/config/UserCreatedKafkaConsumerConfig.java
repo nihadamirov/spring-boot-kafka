@@ -16,32 +16,32 @@ import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
-public class UserCreatedKafkaConsumerConfig {
+public class UserCreatedKafkaConsumerConfig<T> {
 
     @Value("${kafka.host}")
     private String host;
 
-    // ConsumerFactory yaradılması
-    public ConsumerFactory<String, Object> consumerFactory() {
+    public ConsumerFactory<String, T> consumerFactory() {
 
-        // Konfiqurasiya map-i
+        // Creating a Map of string-object pairs
         Map<String, Object> config = new HashMap<>();
 
-        // Konfiqurasiya əlavə edilməsi
+        // Adding the Configuration
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, host);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        // config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+        //config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
 
         return new DefaultKafkaConsumerFactory<>(config);
     }
 
-    // Listener yaratmaq
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Object> concurrentKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Object> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    // Creating a Listener
+    public ConcurrentKafkaListenerContainerFactory concurrentKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, T> factory
+                = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setRecordMessageConverter(new StringJsonMessageConverter());  // Doğru metod istifadə edildi
+        factory.setRecordMessageConverter(new StringJsonMessageConverter());
         return factory;
     }
 }

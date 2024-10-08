@@ -23,7 +23,8 @@ public class Notification {
     private Long userId;
     @Field
     private String email;
-    @Field
+    private String firstName;
+    private String lastName;
     private Boolean isSend;
 
 

@@ -1,4 +1,5 @@
-version: '3.8'
+version: '3.1'
+
 services:
   couchbase:
     image: couchbase:latest
@@ -14,7 +15,7 @@ services:
       - COUCHBASE_ADMINISTRATOR_USERNAME=admin  # Yönetici istifadəçi adı
       - COUCHBASE_ADMINISTRATOR_PASSWORD=123456  # Yönetici şifrəsi
     volumes:
-      - ./couchbase_data:/opt/couchbase/var  # Couchbase üçün məlumatları saxlamaq üçün mount point
+      - ./couchbase_data:/opt/couchbase/var  # Couchbase üçün məlu Couchbase üçün məlumatları saxlamaq üçün mount point
 
   zookeeper:
     image: "docker.io/bitnami/zookeeper:3"
@@ -24,7 +25,6 @@ services:
       - "zookeeper_data:/bitnami"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
-
   kafka:
     image: "docker.io/bitnami/kafka:2-debian-10"
     ports:
@@ -52,7 +52,7 @@ services:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:9093
       - KAFKA_CLUSTERS_0_ZOOKEEPER=localhost:2181
-      
+
 volumes:
   zookeeper_data:
     driver: local

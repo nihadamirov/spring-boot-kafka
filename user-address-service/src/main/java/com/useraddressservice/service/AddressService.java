@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AddressService {
+
     private final AddressRepository addressRepository;
 
-    public void save(Address address) {
-        addressRepository.save(address);
+    public Address save(Address address) {
+        return addressRepository.save(address);
     }
 
     public Address getAddressByUserId(Long userId) {

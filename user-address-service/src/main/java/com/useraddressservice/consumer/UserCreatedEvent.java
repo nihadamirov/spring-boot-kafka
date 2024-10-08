@@ -1,11 +1,14 @@
 package com.useraddressservice.consumer;
 
 import com.useraddressservice.entity.Address;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
