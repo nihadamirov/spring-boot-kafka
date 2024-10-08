@@ -17,23 +17,22 @@ public class KafkaProducer {
 
     private final KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void sendMessage(GenericMessage<?> message) {
-        // KafkaTemplate.send() CompletableFuture qaytarır
+    public void sendMessage(GenericMessage<Object> message) {
         CompletableFuture<SendResult<String, Object>> future = kafkaTemplate.send(message);
 
         future.whenComplete((result, ex) -> {
-            if (ex == null) {
+            if (ex != null) {
+                log.error("Unable to deliver message to Kafka", ex);
+            } else {
                 if (Objects.isNull(result)) {
                     log.info("Empty result on success for message {}", message);
                     return;
                 }
-                log.info("Message: {} published, topic: {}, partition: {}, and offset: {}",
+                log.info("Message: {} published, topic: {}, partition: {} and offset: {}",
                         message.getPayload(),
                         result.getRecordMetadata().topic(),
                         result.getRecordMetadata().partition(),
                         result.getRecordMetadata().offset());
-            } else {
-                log.error("Unable to deliver message to Kafka", ex);
             }
         });
     }

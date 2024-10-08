@@ -10,10 +10,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Slf4j
 public class NotificationService {
+
     private final NotificationRepository notificationRepository;
 
     public void save(Notification notification) {
         Notification savedEntity = notificationRepository.save(notification);
-        log.info("NotificationService.save saved Id: {}", savedEntity.getId());
+        log.info("Saved Notification Id: {}", savedEntity.getId());
     }
 }

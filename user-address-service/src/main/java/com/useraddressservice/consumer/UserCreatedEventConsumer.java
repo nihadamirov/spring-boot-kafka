@@ -17,8 +17,8 @@ public class UserCreatedEventConsumer {
 
     private final AddressService addressService;
 
-    @KafkaListener(topics = "${kafka.topics.user-created.topic}",
-            groupId = "${kafka.topics.user-created.consumerGroup}",
+    @KafkaListener(topics = "${kafka.topics.user-created.topics}",
+            groupId = "${kafka.topics.user-created.consumerGroups}",
             containerFactory = "concurrentKafkaListenerContainerFactory"
     )
     public void consumeCreatedUserEvent(@Payload UserCreatedEvent eventData,
@@ -31,8 +31,7 @@ public class UserCreatedEventConsumer {
                 eventData, consumerRecord.partition(), consumerRecord.offset(), Thread.currentThread().getName(), consumerRecord.key());
 
         Address entity = UserCreatedEvent.getAddressEntityFromEvent(eventData);
-
+        log.info("Saving address entity: {}", entity);
         addressService.save(entity);
-
     }
 }

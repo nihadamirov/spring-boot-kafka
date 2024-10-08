@@ -19,10 +19,10 @@ server:
   port: 8802
 
 kafka:
-  host: kafka:9092
+  host: localhost:9092
   topics:
     user-created:
-      topic: user_service.user_created.0
-      consumerGroup: ${spring.application.name}-user-created-consumer
+      topics: user_service.user_created.1
+      consumerGroups: ${spring.application.name}-user-created-consumer
       replicationFactor: 1
       retentionInMs: 604800000

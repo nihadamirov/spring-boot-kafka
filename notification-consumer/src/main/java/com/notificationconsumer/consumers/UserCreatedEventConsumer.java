@@ -10,7 +10,6 @@ import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -18,24 +17,16 @@ public class UserCreatedEventConsumer {
 
     private final NotificationService notificationService;
 
-
     @KafkaListener(topics = "${kafka.topics.user-created.topic}",
             groupId = "${kafka.topics.user-created.consumerGroup}",
             containerFactory = "concurrentKafkaListenerContainerFactory"
     )
     public void consumeCreatedUserEvent(@Payload UserCreatedEvent eventData,
                                         @Headers ConsumerRecord<String, Object> consumerRecord) {
-        log.info("UserCreatedEventConsumer.consumeApprovalRequestResultedEvent consumed EVENT :{} " +
-                        "from partition : {} " +
-                        "with offset : {} " +
-                        "thread : {} " +
-                        "for message key: {}",
+        log.info("Consumed EVENT: {} from partition: {} with offset: {} in thread: {} for message key: {}",
                 eventData, consumerRecord.partition(), consumerRecord.offset(), Thread.currentThread().getName(), consumerRecord.key());
 
         Notification entity = Notification.EventToNotificationEntity(eventData);
-
         notificationService.save(entity);
-
     }
-
 }

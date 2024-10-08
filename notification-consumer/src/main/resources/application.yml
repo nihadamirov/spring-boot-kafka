@@ -14,13 +14,13 @@ couchbase:
       connectionTimeout: 10
 
 server:
-  port: 0
+  port: 8803
 
 kafka:
-  host: kafka:9092
+  host: localhost:9092
   topics:
     user-created:
-      topic: user_service.user_created.0
+      topic: user_service.user_created.1
       consumerGroup: ${spring.application.name}-user-created-consumer
       replicationFactor: 1
       retentionInMs: 604800000
