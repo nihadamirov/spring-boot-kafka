@@ -1,6 +1,6 @@
 spring:
   application:
-    name: notification_service
+    name: notification-service
 
 couchbase:
   notification-service:
@@ -20,7 +20,7 @@ kafka:
   host: localhost:9092
   topics:
     user-created:
-      topic: user_service.user_created.1
+      topic: user-service.user_created.1
       consumerGroup: ${spring.application.name}-user-created-consumer
       replicationFactor: 1
       retentionInMs: 604800000

@@ -1,6 +1,5 @@
 package com.useraddressservice.config;
 
-import com.useraddressservice.consumer.UserCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -10,36 +9,39 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
-
+import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
-public class UserCreatedKafkaConsumerConfig {
+public class UserCreatedKafkaConsumerConfig<T> {
 
     @Value("${kafka.host}")
     private String host;
 
-    public ConsumerFactory<String, Object> consumerFactory() {
+    public ConsumerFactory<String, T> consumerFactory() {
+
+        // Creating a Map of string-object pairs
         Map<String, Object> config = new HashMap<>();
+
+        // Adding the Configuration
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, host);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
-        // ErrorHandlingDeserializer konfiqurasiyası
-        //config.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class);
-        config.put(JsonDeserializer.VALUE_DEFAULT_TYPE, UserCreatedEvent.class.getName());
+        config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        //config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+
         return new DefaultKafkaConsumerFactory<>(config);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Object> concurrentKafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, Object> factory
+    // Creating a Listener
+    public ConcurrentKafkaListenerContainerFactory concurrentKafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, T> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setRecordMessageConverter(new StringJsonMessageConverter());
         return factory;
     }
 }
