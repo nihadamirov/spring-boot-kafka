@@ -21,6 +21,7 @@ public class UserCreatedKafkaConsumerConfig<T> {
     @Value("${kafka.host}")
     private String host;
 
+    @Bean
     public ConsumerFactory<String, T> consumerFactory() {
 
         // Creating a Map of string-object pairs

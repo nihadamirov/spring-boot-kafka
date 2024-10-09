@@ -1,5 +1,7 @@
 package com.userservice.dto.request;
 
+import com.userservice.entity.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 

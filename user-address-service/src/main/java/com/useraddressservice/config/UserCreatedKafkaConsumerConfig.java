@@ -23,10 +23,8 @@ public class UserCreatedKafkaConsumerConfig<T> {
 
     public ConsumerFactory<String, T> consumerFactory() {
 
-        // Creating a Map of string-object pairs
         Map<String, Object> config = new HashMap<>();
 
-        // Adding the Configuration
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, host);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);

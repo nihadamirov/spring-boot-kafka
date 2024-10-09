@@ -1,6 +1,5 @@
 package com.notificationconsumer.entity;
 
-import com.notificationconsumer.consumers.UserCreatedEvent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,16 +22,5 @@ public class Notification {
     private Long userId;
     @Field
     private String email;
-    private String firstName;
-    private String lastName;
     private Boolean isSend;
-
-
-    public static Notification EventToNotificationEntity(UserCreatedEvent event) {
-        return Notification.builder()
-                .userId(event.getId())
-                .email(event.getEmail())
-                .isSend(Boolean.TRUE)
-                .build();
-    }
 }

@@ -1,10 +1,11 @@
 package com.userservice.dto.response;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AddressResponseDto {
     private Long id;
     private Long userId;

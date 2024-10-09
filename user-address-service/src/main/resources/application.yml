@@ -22,7 +22,7 @@ kafka:
   host: localhost:9092
   topics:
     user-created:
-      topics: user-service.user_created.1
-      consumerGroups: ${spring.application.name}-user-created-consumer
+      topic: user-service.user_created.1
+      consumerGroup: ${spring.application.name}-user-created-consumer
       replicationFactor: 1
       retentionInMs: 604800000

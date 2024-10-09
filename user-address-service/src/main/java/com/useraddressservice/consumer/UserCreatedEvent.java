@@ -2,7 +2,6 @@ package com.useraddressservice.consumer;
 
 import com.useraddressservice.entity.Address;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class UserCreatedEvent {
     private Long id;
     private String addressText;
