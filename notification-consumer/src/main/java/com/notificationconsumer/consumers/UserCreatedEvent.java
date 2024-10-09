@@ -16,18 +16,14 @@ import lombok.ToString;
 @Builder
 public class UserCreatedEvent {
     private Long id;
-    private String firstName;
-    private String lastName;
     private String email;
     private Boolean status;
 
     public static Notification EventToNotificationEntity(UserCreatedEvent event) {
         return Notification.builder()
                 .userId(event.getId())
-                .firstName(event.getFirstName())
-                .lastName(event.getLastName())
                 .email(event.getEmail())
-                .isSend(event.getStatus())
+                .isSend(Boolean.TRUE)
                 .build();
     }
 }

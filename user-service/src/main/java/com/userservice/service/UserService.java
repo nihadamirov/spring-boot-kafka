@@ -22,13 +22,12 @@ import static org.springframework.kafka.support.KafkaHeaders.TOPIC;
 public class UserService {
 
     private final UserRepository userRepository;
-
     private final KafkaProducer kafkaProducer;
-
     private final UserCreatedTopicProperties userCreatedTopicProperties;
 
+
     public User create(UserCreateRequest userCreateRequest) {
-        User user = User.getUser(userCreateRequest);
+        User user = getUser(userCreateRequest);
         User savedUser = userRepository.save(user);
 
         UserCreatedPayload payload = UserCreatedPayload.GetUserCreatedPayload(savedUser, userCreateRequest.getAddressText());
@@ -44,5 +43,13 @@ public class UserService {
     public User getUserById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.orElse(null);
+    }
+
+    private User getUser(UserCreateRequest userCreateRequest) {
+        return User.builder()
+                .firstName(userCreateRequest.getFirstName())
+                .lastName(userCreateRequest.getLastName())
+                .email(userCreateRequest.getEmail())
+                .build();
     }
 }

@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
-    private RestTemplate restTemplate = new RestTemplate();
     private final UserService userService;
 
     @PostMapping
@@ -24,8 +23,9 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public UserResponse getUserAddress(@PathVariable Long userId) {
-        // You have to change user-address service port according to running port
         String url = String.format("http://localhost:8802/api/address/%s", userId);
+
+        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<AddressResponseDto> address = restTemplate.getForEntity(url, AddressResponseDto.class);
 
         User user = userService.getUserById(address.getBody().getUserId());

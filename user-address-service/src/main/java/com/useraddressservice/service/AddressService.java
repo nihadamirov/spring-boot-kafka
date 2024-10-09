@@ -11,8 +11,8 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
 
-    public Address save(Address address) {
-        return addressRepository.save(address);
+    public void saved(Address address) {
+        addressRepository.save(address);
     }
 
     public Address getAddressByUserId(Long userId) {

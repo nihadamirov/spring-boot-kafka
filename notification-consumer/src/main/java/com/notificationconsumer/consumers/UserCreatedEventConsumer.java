@@ -26,7 +26,7 @@ public class UserCreatedEventConsumer {
         log.info("Consumed EVENT: {} from partition: {} with offset: {} in thread: {} for message key: {}",
                 eventData, consumerRecord.partition(), consumerRecord.offset(), Thread.currentThread().getName(), consumerRecord.key());
 
-        Notification entity = Notification.EventToNotificationEntity(eventData);
+        Notification entity = UserCreatedEvent.EventToNotificationEntity(eventData);
         notificationService.save(entity);
     }
 }

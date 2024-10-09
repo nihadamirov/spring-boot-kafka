@@ -1,12 +1,10 @@
 package com.userservice.entity;
 
-import com.userservice.dto.request.UserCreateRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @Table(name = "users")
-
 @Setter
 @Getter
 @NoArgsConstructor
@@ -28,12 +26,4 @@ public class User extends BaseEntity {
     //unique = true,
     @Column(name = "email", nullable = false)
     private String email;
-
-    public static User getUser(UserCreateRequest userCreateRequest) {
-        return User.builder()
-                .firstName(userCreateRequest.getFirstName())
-                .lastName(userCreateRequest.getLastName())
-                .email(userCreateRequest.getEmail())
-                .build();
-    }
 }
