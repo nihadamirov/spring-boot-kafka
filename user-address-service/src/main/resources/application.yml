@@ -16,7 +16,7 @@ spring:
 
 
 server:
-  port: 0  #8802
+  port: 8802
 
 kafka:
   host: localhost:9092

@@ -3,12 +3,16 @@ package com.userservice.service;
 import com.userservice.config.UserCreatedTopicProperties;
 import com.userservice.dto.UserCreatedPayload;
 import com.userservice.dto.request.UserCreateRequest;
+import com.userservice.dto.response.AddressResponseDto;
+import com.userservice.dto.response.UserResponse;
 import com.userservice.entity.User;
 import com.userservice.producer.KafkaProducer;
 import com.userservice.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +44,17 @@ public class UserService {
         return savedUser;
     }
 
-    public User getUserById(Long id) {
+    public UserResponse getUserAddress(Long userId) {
+        String url = String.format("http://localhost:8802/api/address/%s", userId);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<AddressResponseDto> address = restTemplate.getForEntity(url, AddressResponseDto.class);
+
+        User user = getUserById(address.getBody().getUserId());
+        return UserResponse.getUserResponseWithAddress(user, address.getBody());
+    }
+
+    private User getUserById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         return userOptional.orElse(null);
     }
